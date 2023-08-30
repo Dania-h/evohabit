@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "post-a-bill",
-    "slug": "post-a-bill",
+    "name": "EvoHabit",
+    "slug": "EvoHabit",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
