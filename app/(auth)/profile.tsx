@@ -35,7 +35,7 @@ const Profile = () => {
             </Text>
 
             <TextInput placeholder="First Name" value={firstName ? firstName : undefined} onChangeText={setFirstName} style={styles.inputField} />
-            <TextInput placeholder="Last Name" value={lastName ? lastName: undefined} onChangeText={setLastName} style={styles.inputField} />
+            <TextInput placeholder="Last Name" value={lastName ? lastName : undefined} onChangeText={setLastName} style={styles.inputField} />
             <Button onPress={onSaveUser} title="Update account" color={'#6c47ff'}></Button>
         </View>
     );

@@ -6,6 +6,7 @@ import { Image } from 'expo-image';
 import EvoHabitAnimal from '../../assets/images/evo-pic2.svg';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
+import HabitList from '../../components/HabitList'
 
 const Home = () => {
 
@@ -31,11 +32,8 @@ const Home = () => {
     const getExpWidth = (hasExp / needExp) * 100
     // const expString = getExpWidth.toString() + '%';
     setExpWidthString(getExpWidth);
-  }, [hasExp]);
-
-  useEffect(() => {
-    console.log(expWidthString)
-  }, [expWidthString])
+    // console.log(`${user?.firstName} line 34`)
+  }, [hasExp, user]);
 
   if (!fontsLoaded && !fontError) {
     return null;
@@ -70,7 +68,10 @@ const Home = () => {
         </View>
       </View>
       <DatesComponent />
-      <Text style={styles.username}>Welcome, {user?.emailAddresses[0].emailAddress} 🎉</Text>
+      <View style={styles.habitsContainer}>
+        <Text style={styles.username}>Good Morning, {user?.firstName}! 🎉</Text>
+        <HabitList />
+      </View>
     </View>
   );
 };
@@ -125,8 +126,10 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   username: {
-    fontSize: 30,
+    fontSize: 20,
     fontFamily: 'Quicksand',
+    fontWeight: '600',
+    paddingLeft: 16,
   },
   expBar: {
     backgroundColor: '#ffffff',
@@ -138,6 +141,19 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: 15,
     backgroundColor: '#4F9D69'
+  },
+  habitsContainer: {
+    backgroundColor: '#fff',
+    width: '100%',
+    flex: 1,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 24,
+    marginTop: 16,
+  },
+  habitsUsername: {
   }
 })
 
