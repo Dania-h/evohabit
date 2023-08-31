@@ -3,13 +3,17 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import { RadialGradient } from 'react-native-gradients';
 import { Image } from 'expo-image';
-import EvoHabitAnimal from '../../assets/images/evo-pic.png';
+import EvoHabitAnimal from '../../assets/images/evo-pic2.svg';
 import { useFonts } from 'expo-font';
+import DatesComponent from '../../components/DatesComponent';
 
 const Home = () => {
 
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+  const [hasExp, setHasExp] = useState(20)
+  const [needExp, setNeedExp] = useState(50)
+  const [expWidthString, setExpWidthString] = useState(0);
 
   const { user } = useUser();
 
@@ -24,11 +28,22 @@ const Home = () => {
     setHeight(Dimensions.get('window').height);
     //handler to get device Width
     setWidth(Dimensions.get('window').width);
-  }, []);
+    const getExpWidth = (hasExp / needExp) * 100
+    // const expString = getExpWidth.toString() + '%';
+    setExpWidthString(getExpWidth);
+  }, [hasExp]);
+
+  useEffect(() => {
+    console.log(expWidthString)
+  }, [expWidthString])
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
+  let expWidth = {
+
+  };
 
   return (
     <View style={styles.container}>
@@ -48,9 +63,13 @@ const Home = () => {
           Entei
         </Text>
         <Text style={[styles.subtitles, styles.blackFont]}>
-          Exp 20/50
+          Exp {hasExp} / {needExp}
         </Text>
+        <View style={styles.expBar}>
+          <View style={[styles.exp, { width: `${expWidthString}%` }]} />
+        </View>
       </View>
+      <DatesComponent />
       <Text style={styles.username}>Welcome, {user?.emailAddresses[0].emailAddress} 🎉</Text>
     </View>
   );
@@ -86,12 +105,14 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     justifyContent: 'space-between',
     width: '100%',
-    paddingLeft: 40,
-    paddingRight: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
+    flexWrap: 'wrap',
+    marginBottom: 10,
   },
   evoName: {
     fontWeight: '700',
-    fontSize: 38,
+    fontSize: 32,
     textAlign: 'left',
     fontFamily: 'Quicksand',
   },
@@ -107,6 +128,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: 'Quicksand',
   },
+  expBar: {
+    backgroundColor: '#ffffff',
+    width: '100%',
+    height: 15,
+    borderRadius: 30,
+  },
+  exp: {
+    borderRadius: 30,
+    height: 15,
+    backgroundColor: '#4F9D69'
+  }
 })
 
 export default Home;
