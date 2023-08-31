@@ -27,6 +27,7 @@ const TabsPage = () => {
                     backgroundColor: '#6c47ff',
                 },
                 headerTintColor: '#fff',
+                headerShown: false,
             }}>
             <Tabs.Screen
                 name="home"
