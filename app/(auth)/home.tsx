@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import { RadialGradient } from 'react-native-gradients';
 import { Image } from 'expo-image';
-import EvoHabitAnimal from '../../assets/images/evo-pic2.svg';
+import EvoHabitAnimal from '../../assets/images/evo-pic3.png';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
 import HabitList from '../../components/HabitList'
@@ -46,9 +46,9 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.linearGradient}>
-        <RadialGradient x={width / 2} y={height / 6} rx={250} ry={250} colorList={colorList} />
+        <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
       </View>
-      <View style={{ width: width / 1.25, height: height / 2, flex: 0.5 }}>
+      <View style={{ width: width / 1.5, height: height / 2, flex: 1 }}>
         <Image
           style={styles.image}
           source={EvoHabitAnimal}
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
     alignItems: 'center',
+    paddingTop: 24,
   },
   linearGradient: {
     width: '100%',
