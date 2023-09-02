@@ -2,13 +2,12 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import { RadialGradient } from 'react-native-gradients';
-import { Image } from 'expo-image';
-import EvoHabitAnimal from '../../assets/images/evo-pic3.png';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
 import HabitList from '../../components/HabitList'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EvoInfo from '../../components/EvoInfo';
+import EvoPic from '../../components/EvoPic';
 
 const Home = () => {
 
@@ -48,14 +47,7 @@ const Home = () => {
         <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
       </View>
       <SafeAreaView style={styles.safeArea}>
-        <View style={{ width: width / 1.5, height: height / 4 }}>
-          <Image
-            style={styles.image}
-            source={EvoHabitAnimal}
-            /*         placeholder={blurhash} */
-            contentFit="fill"
-          />
-        </View>
+        <EvoPic height={height} width={width} />
         <EvoInfo hasExp={hasExp} needExp={needExp} expWidth={expWidthString} />
         <DatesComponent />
         <HabitList username={user?.firstName ? user.firstName : ""} />
@@ -79,19 +71,13 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: '#ff00ff'
+    borderColor: '#ff00ff',
+    display: 'flex',
   },
   linearGradient: {
     width: '100%',
     height: '100%',
     position: 'absolute'
-  },
-  imageContainer: {
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    zIndex: 100,
   },
   habitsUsername: {
   }
