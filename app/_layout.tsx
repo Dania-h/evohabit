@@ -2,6 +2,7 @@ import { ClerkProvider, useAuth } from '@clerk/clerk-expo'
 import { Slot, useRouter, useSegments } from 'expo-router';
 import * as SecureStore from 'expo-secure-store'
 import { useEffect } from 'react'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
 
@@ -47,7 +48,9 @@ const InitialLayout = () => {
 
 
   return (
-    <Slot />
+    <SafeAreaProvider>
+      <Slot />
+    </SafeAreaProvider>
   )
 }
 

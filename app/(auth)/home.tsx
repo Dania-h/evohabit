@@ -7,6 +7,7 @@ import EvoHabitAnimal from '../../assets/images/evo-pic3.png';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
 import HabitList from '../../components/HabitList'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Home = () => {
 
@@ -44,34 +45,37 @@ const Home = () => {
   };
 
   return (
+
     <View style={styles.container}>
       <View style={styles.linearGradient}>
         <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
       </View>
-      <View style={{ width: width / 1.5, height: height / 2, flex: 1 }}>
-        <Image
-          style={styles.image}
-          source={EvoHabitAnimal}
-          /*         placeholder={blurhash} */
-          contentFit="fill"
-        />
-      </View>
-      <View style={styles.evoNameContainer}>
-        <Text style={[styles.evoName]}>
-          Entei
-        </Text>
-        <Text style={[styles.subtitles, styles.blackFont]}>
-          Exp {hasExp} / {needExp}
-        </Text>
-        <View style={styles.expBar}>
-          <View style={[styles.exp, { width: `${expWidthString}%` }]} />
+      <SafeAreaView style={styles.safeArea}>
+        <View style={{ width: width / 1.5, height: height / 2, flex: 1 }}>
+          <Image
+            style={styles.image}
+            source={EvoHabitAnimal}
+            /*         placeholder={blurhash} */
+            contentFit="fill"
+          />
         </View>
-      </View>
-      <DatesComponent />
-      <View style={styles.habitsContainer}>
-        <Text style={styles.username}>Good Morning, {user?.firstName}! 🎉</Text>
-        <HabitList />
-      </View>
+        <View style={styles.evoNameContainer}>
+          <Text style={[styles.evoName]}>
+            Entei
+          </Text>
+          <Text style={[styles.subtitles, styles.blackFont]}>
+            Exp {hasExp} / {needExp}
+          </Text>
+          <View style={styles.expBar}>
+            <View style={[styles.exp, { width: `${expWidthString}%` }]} />
+          </View>
+        </View>
+        <DatesComponent />
+        <View style={styles.habitsContainer}>
+          <Text style={styles.username}>Good Morning, {user?.firstName}! 🎉</Text>
+          <HabitList />
+        </View>
+      </SafeAreaView>
     </View>
   );
 };
@@ -84,10 +88,11 @@ const colorList = [
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
     flex: 1,
+  },
+  safeArea: {
     alignItems: 'center',
-    paddingTop: 24,
+    flex: 1,
   },
   linearGradient: {
     width: '100%',
