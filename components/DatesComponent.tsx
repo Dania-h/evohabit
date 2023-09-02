@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+
+
 export default function DatesComponent() {
 
     const calendar = [

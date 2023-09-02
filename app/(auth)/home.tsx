@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
 import HabitList from '../../components/HabitList'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import EvoInfo from '../../components/EvoInfo';
 
 const Home = () => {
 
@@ -59,22 +60,9 @@ const Home = () => {
             contentFit="fill"
           />
         </View>
-        <View style={styles.evoNameContainer}>
-          <Text style={[styles.evoName]}>
-            Entei
-          </Text>
-          <Text style={[styles.subtitles, styles.blackFont]}>
-            Exp {hasExp} / {needExp}
-          </Text>
-          <View style={styles.expBar}>
-            <View style={[styles.exp, { width: `${expWidthString}%` }]} />
-          </View>
-        </View>
+        <EvoInfo hasExp={hasExp} needExp={needExp} expWidth={expWidthString}/>
         <DatesComponent />
-        <View style={styles.habitsContainer}>
-          <Text style={styles.username}>Good Morning, {user?.firstName}! 🎉</Text>
-          <HabitList />
-        </View>
+        <HabitList username={user?.firstName ? user.firstName : ""} />
       </SafeAreaView>
     </View>
   );
@@ -93,6 +81,9 @@ const styles = StyleSheet.create({
   safeArea: {
     alignItems: 'center',
     flex: 1,
+    borderWidth: 3,
+    borderStyle: 'solid',
+    borderColor: '#ff0000'
   },
   linearGradient: {
     width: '100%',
@@ -106,57 +97,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: 100,
-  },
-  evoNameContainer: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingLeft: 20,
-    paddingRight: 20,
-    flexWrap: 'wrap',
-    marginBottom: 10,
-  },
-  evoName: {
-    fontWeight: '700',
-    fontSize: 32,
-    textAlign: 'left',
-    fontFamily: 'Quicksand',
-  },
-  subtitles: {
-    fontSize: 11,
-    fontStyle: 'normal',
-    fontWeight: '300',
-  },
-  blackFont: {
-    color: '#000',
-  },
-  username: {
-    fontSize: 20,
-    fontFamily: 'Quicksand',
-    fontWeight: '600',
-    paddingLeft: 16,
-  },
-  expBar: {
-    backgroundColor: '#ffffff',
-    width: '100%',
-    height: 15,
-    borderRadius: 30,
-  },
-  exp: {
-    borderRadius: 30,
-    height: 15,
-    backgroundColor: '#4F9D69'
-  },
-  habitsContainer: {
-    backgroundColor: '#fff',
-    flex: 1,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 24,
-    marginTop: 16,
   },
   habitsUsername: {
   }
