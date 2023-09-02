@@ -5,12 +5,14 @@ import { RadialGradient } from 'react-native-gradients';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
 import HabitList from '../../components/HabitList'
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import EvoInfo from '../../components/EvoInfo';
 import EvoPic from '../../components/EvoPic';
 
 const Home = () => {
+  const insets = useSafeAreaInsets();
 
+  const [safeAreaBottom, setSafeAreaBottom] = useState(insets.bottom);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const [hasExp, setHasExp] = useState(20)
@@ -18,6 +20,9 @@ const Home = () => {
   const [expWidthString, setExpWidthString] = useState(0);
 
   const { user } = useUser();
+
+
+  console.log(insets)
 
   const [fontsLoaded, fontError] = useFonts({
     'Quicksand': require('../../assets/fonts/Quicksand.ttf'),
@@ -46,7 +51,7 @@ const Home = () => {
       <View style={styles.linearGradient}>
         <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
       </View>
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={[styles.safeArea, { paddingBottom : -safeAreaBottom}]}>
         <EvoPic height={height} width={width} />
         <EvoInfo hasExp={hasExp} needExp={needExp} expWidth={expWidthString} />
         <DatesComponent />
@@ -69,18 +74,13 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    borderWidth: 3,
-    borderStyle: 'solid',
-    borderColor: '#ff00ff',
     display: 'flex',
   },
   linearGradient: {
     width: '100%',
     height: '100%',
-    position: 'absolute'
+    position: 'absolute',
   },
-  habitsUsername: {
-  }
 })
 
 export default Home;

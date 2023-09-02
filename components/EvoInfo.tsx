@@ -33,9 +33,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingLeft: 20,
         paddingRight: 20,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderColor: "ffff00"
+
     },
     evoNameExp: {
         flexDirection: 'row',

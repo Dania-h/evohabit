@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     image: {
         width: '100%',

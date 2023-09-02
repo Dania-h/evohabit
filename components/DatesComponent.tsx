@@ -56,10 +56,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         columnGap: 10,
         width: '100%',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderColor: "ffffff",
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        marginVertical: 16,
     },
     bubble: {
         borderRadius: 999,
