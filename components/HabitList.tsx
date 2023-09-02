@@ -6,11 +6,11 @@ import Heart from '../assets/images/heart.svg'
 import WaterGlass from '../assets/images/glass-water.svg'
 import Planner from '../assets/images/notebook.svg'
 
-interface DatesComponentProps {
+interface HabitListProps {
     username: string;
 }
 
-const DatesComponent: React.FC<DatesComponentProps> = (props) => {
+const HabitList: React.FC<HabitListProps> = (props) => {
     const { username } = props;
 
     const habits = [
@@ -34,6 +34,13 @@ const DatesComponent: React.FC<DatesComponentProps> = (props) => {
             progress: 100,
             subtitle: "",
             category: "health",
+        },
+        {
+            name: 'Take Vitamins',
+            completed: true,
+            progress: 100,
+            subtitle: "2 pills",
+            category: "nutrition"
         },
     ]
 
@@ -71,7 +78,7 @@ const DatesComponent: React.FC<DatesComponentProps> = (props) => {
     return (
         <View style={styles.habitsContainer}>
             <Text style={styles.username}>Good Morning, {username}! 🎉</Text>
-            <ScrollView style={styles.scrollviewContainer} showsVerticalScrollIndicator={false}>
+            <ScrollView style={styles.scrollviewContainer}>
                 <View style={styles.container}>
                     {
                         habits.map((habit, index) => {
@@ -104,30 +111,28 @@ const DatesComponent: React.FC<DatesComponentProps> = (props) => {
     )
 }
 
-export default DatesComponent;
+export default HabitList;
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        gap: 16,
-        paddingVertical: 16,
-    },
     habitsContainer: {
         backgroundColor: '#fff',
-        flex: 1,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingTop: 24,
-        marginTop: 16,
+        padding: 16,
+        paddingBottom: 0,
+        borderWidth: 3,
+        borderStyle: 'solid',
+        borderColor: '#ff0000',
+        flex: 1,
+    },
+    scrollviewContainer: {
         borderWidth: 3,
         borderStyle: 'solid',
         borderColor: '#ffff00',
     },
-    scrollviewContainer: {
-        flex: 1,
-
+    container: {
+        width: '100%',
+        rowGap: 16,
     },
     habitContainer: {
         width: '100%',

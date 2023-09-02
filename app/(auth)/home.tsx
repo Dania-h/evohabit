@@ -41,10 +41,6 @@ const Home = () => {
     return null;
   }
 
-  let expWidth = {
-
-  };
-
   return (
 
     <View style={styles.container}>
@@ -52,7 +48,7 @@ const Home = () => {
         <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
       </View>
       <SafeAreaView style={styles.safeArea}>
-        <View style={{ width: width / 1.5, height: height / 2, flex: 1 }}>
+        <View style={{ width: width / 1.5, height: height / 4 }}>
           <Image
             style={styles.image}
             source={EvoHabitAnimal}
@@ -60,7 +56,7 @@ const Home = () => {
             contentFit="fill"
           />
         </View>
-        <EvoInfo hasExp={hasExp} needExp={needExp} expWidth={expWidthString}/>
+        <EvoInfo hasExp={hasExp} needExp={needExp} expWidth={expWidthString} />
         <DatesComponent />
         <HabitList username={user?.firstName ? user.firstName : ""} />
       </SafeAreaView>
@@ -77,13 +73,13 @@ const colorList = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   safeArea: {
-    alignItems: 'center',
     flex: 1,
     borderWidth: 3,
     borderStyle: 'solid',
-    borderColor: '#ff0000'
+    borderColor: '#ff00ff'
   },
   linearGradient: {
     width: '100%',
@@ -93,7 +89,6 @@ const styles = StyleSheet.create({
   imageContainer: {
   },
   image: {
-    flex: 1,
     width: '100%',
     height: '100%',
     zIndex: 100,

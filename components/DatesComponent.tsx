@@ -54,8 +54,12 @@ export default function DatesComponent() {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        gap: 10,
-        marginTop: 10,
+        columnGap: 10,
+        width: '100%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: "ffffff",
+        justifyContent: 'space-around'
     },
     bubble: {
         borderRadius: 999,
@@ -63,10 +67,11 @@ const styles = StyleSheet.create({
         width: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'relative'
+        position: 'relative',
     },
     bubbleContainer: {
         alignItems: 'center',
+        flex: 0,
 
     },
     bubbleDay: {

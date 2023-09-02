@@ -11,12 +11,14 @@ const EvoInfo: React.FC<DatesComponentProps> = (props) => {
 
     return (
         <View style={styles.evoNameContainer}>
-            <Text style={[styles.evoName]}>
-                Entei
-            </Text>
-            <Text style={[styles.subtitles,]}>
-                Exp {hasExp} / {needExp}
-            </Text>
+            <View style={styles.evoNameExp}>
+                <Text style={[styles.evoName]}>
+                    Entei
+                </Text>
+                <Text style={[styles.subtitles,]}>
+                    Exp {hasExp} / {needExp}
+                </Text>
+            </View>
             <View style={styles.expBar}>
                 <View style={[styles.exp, { width: `${expWidth}%` }]} />
             </View>
@@ -28,14 +30,18 @@ export default EvoInfo
 
 const styles = StyleSheet.create({
     evoNameContainer: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-        justifyContent: 'space-between',
         width: '100%',
         paddingLeft: 20,
         paddingRight: 20,
-        flexWrap: 'wrap',
-        marginBottom: 10,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: "ffff00"
+    },
+    evoNameExp: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'baseline',
     },
     evoName: {
         fontWeight: '700',
