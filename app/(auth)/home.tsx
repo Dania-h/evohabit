@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
   },
   habitsContainer: {
     backgroundColor: '#fff',
-    width: '100%',
     flex: 1,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,

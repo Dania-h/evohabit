@@ -65,8 +65,7 @@ export default function DatesComponent() {
     }
 
     return (
-        <ScrollView>
-
+        <ScrollView style={styles.scrollviewContainer} showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 {
                     habits.map((habit, index) => {
@@ -103,6 +102,9 @@ const styles = StyleSheet.create({
         width: '100%',
         gap: 16,
         paddingVertical: 16,
+    },
+    scrollviewContainer: {
+        flex: 1,
     },
     habitContainer: {
         width: '100%',
