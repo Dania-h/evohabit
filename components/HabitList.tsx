@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import Checkmark from '../assets/images/checkmark.svg'
 import Notebook from '../assets/images/book.svg'
 import Heart from '../assets/images/heart.svg'
 import WaterGlass from '../assets/images/glass-water.svg'
 import Planner from '../assets/images/notebook.svg'
+import { Platform } from 'react-native';
 
 interface HabitListProps {
     username: string;
@@ -74,38 +75,40 @@ const HabitList: React.FC<HabitListProps> = (props) => {
         }
     }
 
+    const renderItem = ({ item }: { item: typeof habits[0] }) => (
+        <View style={[styles.indHabitContainer,
+        Platform.OS === 'android' && styles.androidShadow,
+        Platform.OS === 'ios' && styles.iosShadow
+        ]}>
+            {getIcon(item.category)}
+            <View>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.subtitle}>{item.subtitle}</Text>
+            </View>
+            <View style={[styles.progress, item.progress === 100 ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#00000026' }]}>
+                {item.progress !== 100 ?
+                    <View style={styles.progressWrapper}>
+                        <Text>{item.progress}%</Text>
+                    </View>
+                    :
+                    <Checkmark />
+                }
+            </View>
+        </View>
+    );
+
     return (
         <View style={styles.habitsContainer}>
             <Text style={styles.username}>Good Morning, {username}! 🎉</Text>
-            <ScrollView style={styles.scrollviewContainer}>
-                <View style={styles.container}>
-                    {
-                        habits.map((habit, index) => {
-                            return (
-                                <View key={index} style={styles.habitContainer}>
-                                    {getIcon(habit.category)}
-                                    <View>
-                                        <Text style={styles.name}>{habit.name}</Text>
-                                        <Text style={styles.subtitle}>{habit.subtitle}</Text>
-                                    </View>
-                                    <View style={[styles.progress, habit.progress === 100 ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#00000026' }]}>
-                                        {habit.progress !== 100 ?
-                                            <View style={styles.progressWrapper}>
-
-                                                <Text>{habit.progress}%</Text>
-                                            </View>
-                                            :
-                                            <Checkmark />
-                                        }
-                                    </View>
-                                </View>
-                            )
-                        })
-                    }
-                </View>
-            </ScrollView>
+            <FlatList
+                data={habits}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={[styles.container]}
+            />
         </View>
-    )
+    );
 }
 
 export default HabitList;
@@ -124,16 +127,29 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         rowGap: 16,
+        paddingBottom: 8,
+        paddingTop: 8,
+        paddingHorizontal: 8,
     },
-    habitContainer: {
+    iosShadow: {
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+    },
+    androidShadow: {
+        elevation: 4, // Add elevation for Android
+    },
+    indHabitContainer: {
         width: '100%',
         borderRadius: 30,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: '#000',
+        // borderWidth: 1,
+        // borderStyle: 'solid',
+        // borderColor: '#000',
         alignItems: 'center',
         flexDirection: 'row',
         padding: 16,
+        backgroundColor: '#fff'
     },
     username: {
         fontSize: 20,
