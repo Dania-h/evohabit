@@ -8,6 +8,7 @@ import HabitList from '../../components/HabitList'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import EvoInfo from '../../components/EvoInfo';
 import EvoPic from '../../components/EvoPic';
+import uuid from 'react-native-uuid';
 
 const Home = () => {
   const insets = useSafeAreaInsets();
@@ -17,27 +18,55 @@ const Home = () => {
   const [width, setWidth] = useState(0);
   const [hasExp, setHasExp] = useState(20)
   const [needExp, setNeedExp] = useState(50)
-  const [expWidthString, setExpWidthString] = useState(0);
 
   const { user } = useUser();
 
-
-  console.log(insets)
+  const [habits, setHabits] = useState([
+    {
+      id: uuid.v4("string"),
+      name: 'Study',
+      completed: false,
+      progress: 0,
+      subtitle: "",
+      category: "studies"
+    },
+    {
+      id: uuid.v4("string"),
+      name: 'Drink water',
+      completed: false,
+      progress: 75,
+      subtitle: "8 glasses",
+      category: "nutrition"
+    },
+    {
+      id: uuid.v4("string"),
+      name: 'Work Out',
+      completed: true,
+      progress: 100,
+      subtitle: "",
+      category: "health",
+    },
+    {
+      id: uuid.v4("string"),
+      name: 'Take Vitamins',
+      completed: true,
+      progress: 100,
+      subtitle: "2 pills",
+      category: "nutrition"
+    },
+  ])
 
   const [fontsLoaded, fontError] = useFonts({
     'Quicksand': require('../../assets/fonts/Quicksand.ttf'),
   });
-
-  console.log(fontsLoaded)
 
   useEffect(() => {
     //handler to get device Height
     setHeight(Dimensions.get('window').height);
     //handler to get device Width
     setWidth(Dimensions.get('window').width);
-    const getExpWidth = (hasExp / needExp) * 100
+
     // const expString = getExpWidth.toString() + '%';
-    setExpWidthString(getExpWidth);
     // console.log(`${user?.firstName} line 34`)
   }, [hasExp, user]);
 
@@ -45,17 +74,30 @@ const Home = () => {
     return null;
   }
 
-  return (
+  function handleProgressPress(itemId: string | number[]) {
+    // console.log(itemId)
+    setHabits(prevHabits => {
+      const modifiedHabits = prevHabits.map((habit) => {
+        if (habit.id === itemId) {
+          habit.progress += 5
+          console.log(habit.progress)
+        }
+        return habit
+      })
+      return modifiedHabits
+    })
+  }
 
+  return (
     <View style={styles.container}>
       <View style={styles.linearGradient}>
         <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
       </View>
-      <SafeAreaView style={[styles.safeArea, { paddingBottom : -safeAreaBottom}]}>
+      <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
         <EvoPic height={height} width={width} />
-        <EvoInfo hasExp={hasExp} needExp={needExp} expWidth={expWidthString} />
+        <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
-        <HabitList username={user?.firstName ? user.firstName : ""} />
+        <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width} handleProgressPress={handleProgressPress} habits={habits} />
       </SafeAreaView>
     </View>
   );

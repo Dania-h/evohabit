@@ -1,48 +1,32 @@
 import { View, Text, StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
-import Checkmark from '../assets/images/checkmark.svg'
+
 import Notebook from '../assets/images/book.svg'
 import Heart from '../assets/images/heart.svg'
 import WaterGlass from '../assets/images/glass-water.svg'
 import Planner from '../assets/images/notebook.svg'
 import { Platform } from 'react-native';
+import ProgressCircle from './ProgressCircle';
+
+interface Habit {
+    id: string | number[];
+    name: string;
+    completed: boolean;
+    progress: number;
+    subtitle: string;
+    category: string;
+}
 
 interface HabitListProps {
     username: string;
+    screenWidth: number;
+    handleProgressPress: (itemId: string | number[]) => void;
+    habits: Habit[];
 }
 
 const HabitList: React.FC<HabitListProps> = (props) => {
-    const { username } = props;
 
-    const habits = [
-        {
-            name: 'Study',
-            completed: false,
-            progress: 0,
-            subtitle: "",
-            category: "studies"
-        },
-        {
-            name: 'Drink water',
-            completed: false,
-            progress: 75,
-            subtitle: "8 glasses",
-            category: "nutrition"
-        },
-        {
-            name: 'Work Out',
-            completed: true,
-            progress: 100,
-            subtitle: "",
-            category: "health",
-        },
-        {
-            name: 'Take Vitamins',
-            completed: true,
-            progress: 100,
-            subtitle: "2 pills",
-            category: "nutrition"
-        },
-    ]
+    const { username, screenWidth, handleProgressPress, habits } = props;
+
 
     function getIcon(category: string) {
         if (category === "health") {
@@ -85,15 +69,8 @@ const HabitList: React.FC<HabitListProps> = (props) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.subtitle}>{item.subtitle}</Text>
             </View>
-            <View style={[styles.progress, item.progress === 100 ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#00000026' }]}>
-                {item.progress !== 100 ?
-                    <View style={styles.progressWrapper}>
-                        <Text>{item.progress}%</Text>
-                    </View>
-                    :
-                    <Checkmark />
-                }
-            </View>
+            <ProgressCircle progress={item.progress} handleProgressPress={handleProgressPress}
+            habitId={item.id} />
         </View>
     );
 
@@ -173,23 +150,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: "300",
     },
-    progress: {
-        height: 40,
-        width: 40,
-        borderRadius: 999,
-        marginLeft: 'auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 11,
-        fontWeight: '300',
-    },
-    progressWrapper: {
-        backgroundColor: '#fff',
-        width: '85%',
-        height: '85%',
-        borderRadius: 999,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 3,
+    progressSvg: {
+        position: 'absolute'
     }
 })
