@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native'
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { useSharedValue, withSpring, withTiming, Easing } from 'react-native-reanimated';
 
 interface DatesComponentProps {
     hasExp: number;
@@ -16,7 +16,12 @@ const EvoInfo: React.FC<DatesComponentProps> = (props) => {
     const handlePress = () => {
         const expBarWidth = screenWidth - 40;
         const getExpWidth = (hasExp / needExp) * expBarWidth
-        width.value = withSpring(width.value + getExpWidth);
+        width.value = withTiming(getExpWidth,
+            {
+                duration: 1300,
+                easing: Easing.inOut(Easing.cubic),
+            }
+        );
     };
 
     useEffect(() => {
