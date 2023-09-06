@@ -68,14 +68,14 @@ const ProgressCircle: React.FC<ProgressCircleProps> = (props) => {
 
     function handleProgressPressAnimation(habitId: string | number[]) {
         handleProgressPress()
-        // strokeOffset.value = getStrokeOffset
     }
 
     return (
         <TouchableOpacity style={[styles.progress, newHabit.progress === 100 ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#00000000' }]} onPress={() => handleProgressPressAnimation(newHabit.id)}>
             {newHabit.progress === 100 ? false :
-                <View style={{ position: 'absolute', }}>
-                    <Svg height={circleSize} width={circleSize} viewBox={`0 0 40 40`} pointerEvents='none'>
+                <View style={{ position: 'absolute', transform: [{ rotate: '-90deg' }] }}>
+                    <Svg height={circleSize} width={circleSize} viewBox={`0 0 40 40`} pointerEvents='none'
+                    >
                         <Circle
                             cx={circleSize / 2}
                             cy={circleSize / 2}
