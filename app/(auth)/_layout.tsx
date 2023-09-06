@@ -2,6 +2,9 @@ import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 import { useAuth } from '@clerk/clerk-expo';
+import HabitTab from '../../components/HabitTabPic'
+import EvoTabPic from '../../components/EvoTabPic'
+import { Feather } from '@expo/vector-icons'; 
 
 export const LogoutButton = () => {
     const { signOut } = useAuth();
@@ -30,19 +33,37 @@ const TabsPage = () => {
                 headerShown: false,
             }}>
             <Tabs.Screen
-                name="home"
+                name="HomeScreen"
                 options={{
                     headerTitle: 'Home',
-                    tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <HabitTab />,
                     tabBarLabel: 'Home',
                 }}
                 redirect={!isSignedIn}
             />
             <Tabs.Screen
-                name="profile"
+                name="EvoScreen"
+                options={{
+                    headerTitle: 'Evo',
+                    tabBarIcon: ({ color, size }) => <EvoTabPic />,
+                    tabBarLabel: 'Evo',
+                }}
+                redirect={!isSignedIn}
+            />
+            <Tabs.Screen
+                name="AnalyticsScreen"
+                options={{
+                    headerTitle: 'Analytics',
+                    tabBarIcon: ({ color, size }) => <Ionicons name="stats-chart" size={24} color="gray" />,
+                    tabBarLabel: 'Analytics',
+                }}
+                redirect={!isSignedIn}
+            />
+            <Tabs.Screen
+                name="ProfileScreen"
                 options={{
                     headerTitle: 'My Profile',
-                    tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
+                    tabBarIcon: ({ color, size }) => <Feather name="user" size={24} color="gray" />,
                     tabBarLabel: 'My Profile',
                     headerRight: () => <LogoutButton />,
                 }}
