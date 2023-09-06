@@ -4,7 +4,8 @@ import { Pressable } from 'react-native';
 import { useAuth } from '@clerk/clerk-expo';
 import HabitTab from '../../components/HabitTabPic'
 import EvoTabPic from '../../components/EvoTabPic'
-import { Feather } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons';
+import { Platform, StyleSheet } from 'react-native';
 
 export const LogoutButton = () => {
     const { signOut } = useAuth();
@@ -31,6 +32,10 @@ const TabsPage = () => {
                 },
                 headerTintColor: '#fff',
                 headerShown: false,
+                tabBarStyle: [{ borderTopLeftRadius: 20, borderTopRightRadius: 20 },
+                Platform.OS === 'android' && styles.androidShadow,
+                Platform.OS === 'ios' && styles.iosShadow
+                ]
             }}>
             <Tabs.Screen
                 name="HomeScreen"
@@ -74,3 +79,15 @@ const TabsPage = () => {
 };
 
 export default TabsPage;
+
+const styles = StyleSheet.create({
+    iosShadow: {
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
+    },
+    androidShadow: {
+        elevation: 20, // Add elevation for Android
+    },
+})
