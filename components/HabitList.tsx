@@ -6,6 +6,9 @@ import WaterGlass from '../assets/images/glass-water.svg'
 import Planner from '../assets/images/notebook.svg'
 import { Platform } from 'react-native';
 import ProgressCircle from './ProgressCircle';
+import { useState } from 'react';
+import Habits from '../data/habits';
+
 
 interface Habit {
     id: string | number[];
@@ -19,14 +22,17 @@ interface Habit {
 interface HabitListProps {
     username: string;
     screenWidth: number;
-    handleProgressPress: (itemId: string | number[]) => void;
-    habits: Habit[];
 }
 
 const HabitList: React.FC<HabitListProps> = (props) => {
 
-    const { username, screenWidth, handleProgressPress, habits } = props;
+    const { username, screenWidth } = props;
 
+    const strokeWidth = 4;
+    const circleSize = 40;
+    const radius = 17;
+    const circumference = radius * 2 * Math.PI;
+    const duration = 300;
 
     function getIcon(category: string) {
         if (category === "health") {
@@ -59,7 +65,7 @@ const HabitList: React.FC<HabitListProps> = (props) => {
         }
     }
 
-    const renderItem = ({ item }: { item: typeof habits[0] }) => (
+    const renderItem = ({ item }: { item: typeof Habits[0] }) => (
         <View style={[styles.indHabitContainer,
         Platform.OS === 'android' && styles.androidShadow,
         Platform.OS === 'ios' && styles.iosShadow
@@ -69,8 +75,15 @@ const HabitList: React.FC<HabitListProps> = (props) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.subtitle}>{item.subtitle}</Text>
             </View>
-            <ProgressCircle progress={item.progress} handleProgressPress={handleProgressPress}
-            habitId={item.id} />
+            <ProgressCircle
+                habitId={item.id}
+                strokeWidth={strokeWidth}
+                circleSize={circleSize}
+                radius={radius}
+                circumference={circumference}
+                duration={duration}
+                habit={item}
+            />
         </View>
     );
 
@@ -78,7 +91,7 @@ const HabitList: React.FC<HabitListProps> = (props) => {
         <View style={styles.habitsContainer}>
             <Text style={styles.username}>Good Morning, {username}! 🎉</Text>
             <FlatList
-                data={habits}
+                data={Habits}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}

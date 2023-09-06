@@ -5,55 +5,85 @@ import Animated, {
     useSharedValue,
     interpolate,
     withSpring,
+    useAnimatedProps,
+    withTiming,
+    useDerivedValue,
 
 } from 'react-native-reanimated';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import Checkmark from '../assets/images/checkmark.svg'
+import { useEffect, useState } from 'react';
 
 interface ProgressCircleProps {
-    progress: number;
-    handleProgressPress: (itemId: string | number[]) => void;
     habitId: string | number[];
+    strokeWidth: number;
+    circleSize: number;
+    radius: number;
+    circumference: number;
+    duration: number;
+    habit: {
+        id: string | number[]; // Change 'habitId' to 'id'
+        name: string;
+        completed: boolean;
+        progress: number;
+        subtitle: string;
+        category: string;
+    };
 }
 
 const ProgressCircle: React.FC<ProgressCircleProps> = (props) => {
 
-    const { progress, handleProgressPress, habitId } = props;
+    const { habit, strokeWidth, circleSize, radius, circumference, duration } = props;
 
-    const strokeWidth = 6;
-    const circleSize = 40;
-    const radius = 17;
-    const circumference = radius * 2 * Math.PI;
+    const [newHabit, setNewHabit] = useState(habit)
 
-    const strokeDashoffsetState = useSharedValue(getStroke(progress));
-
-    // console.log(strokeDashoffsetState.value)
+    const strokeOffset = useSharedValue(getStrokeOffset(newHabit.progress));
 
     const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-    function getStroke(progressPercent: number) {
-        const alpha = interpolate(progressPercent, [100, 0], [0, Math.PI * 2]);
-
-        
-        const strokeDashoffset = (alpha * radius)
-        return strokeDashoffset;
+    function getStrokeOffset(progressPercent: number) {
+        return (
+            (((circumference * progressPercent) / 100) - circumference) * -1
+        )
     }
 
-    // function animateCircle() {
-    //     console.log('hello')
-    //     let habitStroke = getStroke(progress)
-    //     strokeDashoffsetState.value = withSpring(strokeDashoffsetState.value + habitStroke);
-    // }
+    function handleProgressPress() {
+        setNewHabit(prevHabit => {
+            return {
+                ...prevHabit,
+                progress: prevHabit.progress + 5
+            }
+        });
+    }
 
-    // useEffect(() => {
-    //     gainExp()
-    // }, [])
+    const animatedCircleProps = useAnimatedProps(() => {
+        return {
+            strokeDashoffset: withTiming(strokeOffset.value, { duration: duration }),
+        };
+    });
+
+    useEffect(() => {
+        strokeOffset.value = getStrokeOffset(newHabit.progress)
+    }, [getStrokeOffset]);
+
+    function handleProgressPressAnimation(habitId: string | number[]) {
+        handleProgressPress()
+        // strokeOffset.value = getStrokeOffset
+    }
 
     return (
-        <TouchableOpacity style={[styles.progress, progress === 100 ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#00000026' }]} onPress={() => handleProgressPress(habitId)}>
-            {progress === 100 ? false :
+        <TouchableOpacity style={[styles.progress, newHabit.progress === 100 ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#00000000' }]} onPress={() => handleProgressPressAnimation(newHabit.id)}>
+            {newHabit.progress === 100 ? false :
                 <View style={{ position: 'absolute', }}>
                     <Svg height={circleSize} width={circleSize} viewBox={`0 0 40 40`} pointerEvents='none'>
+                        <Circle
+                            cx={circleSize / 2}
+                            cy={circleSize / 2}
+                            r={radius}
+                            stroke="#E7E7E7"
+                            strokeWidth={strokeWidth}
+                            fill="transparent"
+                        />
                         <AnimatedCircle
                             cx={circleSize / 2}
                             cy={circleSize / 2}
@@ -61,17 +91,14 @@ const ProgressCircle: React.FC<ProgressCircleProps> = (props) => {
                             stroke="#4F9D69"
                             strokeWidth={strokeWidth}
                             fill="none"
-                            strokeDasharray={`${circumference} ${circumference}`}
-                            strokeDashoffset={strokeDashoffsetState.value}
-
+                            strokeDasharray={`${circumference}`}
+                            animatedProps={animatedCircleProps}
                         />
                     </Svg>
                 </View>
             }
-            {progress !== 100 ?
-                <View style={styles.progressWrapper}>
-                    <Text>{progress}%</Text>
-                </View>
+            {newHabit.progress !== 100 ?
+                <Text style={styles.progressWrapper}>{newHabit.progress}%</Text>
                 :
                 <Checkmark />
             }
@@ -86,7 +113,7 @@ const styles = StyleSheet.create({
     progress: {
         height: 40,
         width: 40,
-        borderRadius: 999,
+        borderRadius: 9999,
         marginLeft: 'auto',
         justifyContent: 'center',
         alignItems: 'center',
@@ -95,12 +122,6 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     progressWrapper: {
-        backgroundColor: '#fff',
-        width: '85%',
-        height: '85%',
-        borderRadius: 999,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 3,
+        fontSize: 11,
     },
 })

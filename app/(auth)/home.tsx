@@ -8,7 +8,6 @@ import HabitList from '../../components/HabitList'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import EvoInfo from '../../components/EvoInfo';
 import EvoPic from '../../components/EvoPic';
-import uuid from 'react-native-uuid';
 
 const Home = () => {
   const insets = useSafeAreaInsets();
@@ -20,41 +19,6 @@ const Home = () => {
   const [needExp, setNeedExp] = useState(50)
 
   const { user } = useUser();
-
-  const [habits, setHabits] = useState([
-    {
-      id: uuid.v4("string"),
-      name: 'Study',
-      completed: false,
-      progress: 0,
-      subtitle: "",
-      category: "studies"
-    },
-    {
-      id: uuid.v4("string"),
-      name: 'Drink water',
-      completed: false,
-      progress: 75,
-      subtitle: "8 glasses",
-      category: "nutrition"
-    },
-    {
-      id: uuid.v4("string"),
-      name: 'Work Out',
-      completed: true,
-      progress: 100,
-      subtitle: "",
-      category: "health",
-    },
-    {
-      id: uuid.v4("string"),
-      name: 'Take Vitamins',
-      completed: true,
-      progress: 100,
-      subtitle: "2 pills",
-      category: "nutrition"
-    },
-  ])
 
   const [fontsLoaded, fontError] = useFonts({
     'Quicksand': require('../../assets/fonts/Quicksand.ttf'),
@@ -74,19 +38,7 @@ const Home = () => {
     return null;
   }
 
-  function handleProgressPress(itemId: string | number[]) {
-    // console.log(itemId)
-    setHabits(prevHabits => {
-      const modifiedHabits = prevHabits.map((habit) => {
-        if (habit.id === itemId) {
-          habit.progress += 5
-          console.log(habit.progress)
-        }
-        return habit
-      })
-      return modifiedHabits
-    })
-  }
+  
 
   return (
     <View style={styles.container}>
@@ -97,7 +49,7 @@ const Home = () => {
         <EvoPic height={height} width={width} />
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
-        <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width} handleProgressPress={handleProgressPress} habits={habits} />
+        <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width}  />
       </SafeAreaView>
     </View>
   );
