@@ -8,6 +8,7 @@ import HabitList from '../../components/HabitList'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import EvoInfo from '../../components/EvoInfo';
 import EvoPic from '../../components/EvoPic';
+import BackgroundGradient from '../../components/BackgroundGradient';
 
 const Home = () => {
   const insets = useSafeAreaInsets();
@@ -42,9 +43,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.linearGradient}>
-        <RadialGradient x={width / 2} y={height / 6} rx={350} ry={350} colorList={colorList} />
-      </View>
+      <BackgroundGradient width={width} height={height} colorList={colorList}/>
       <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
         <EvoPic height={height} width={width} />
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
