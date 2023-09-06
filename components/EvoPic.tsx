@@ -1,15 +1,20 @@
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, View, Dimensions } from "react-native"
 import { Image } from 'expo-image'
 import EvoHabitAnimal from '../assets/images/evo-pic3.png';
+import { useEffect, useState } from "react";
 
-interface EvoPicProps {
-    width: number;
-    height: number;
-}
+const EvoPic = () => {
 
-const EvoPic: React.FC<EvoPicProps> = (props) => {
+    const [height, setHeight] = useState(0);
+    const [width, setWidth] = useState(0);
 
-    const { height, width } = props;
+    useEffect(() => {
+        //handler to get device Height
+        setHeight(Dimensions.get('window').height);
+        //handler to get device Width
+        setWidth(Dimensions.get('window').width);
+
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -17,7 +22,6 @@ const EvoPic: React.FC<EvoPicProps> = (props) => {
                 <Image
                     style={styles.image}
                     source={EvoHabitAnimal}
-                    /*         placeholder={blurhash} */
                     contentFit="fill"
                 />
             </View>

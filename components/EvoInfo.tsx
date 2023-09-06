@@ -5,7 +5,7 @@ import Animated, { useSharedValue, withSpring, withTiming, Easing } from 'react-
 interface DatesComponentProps {
     hasExp: number;
     needExp: number;
-    screenWidth: number,
+    screenWidth: number;
 }
 
 const EvoInfo: React.FC<DatesComponentProps> = (props) => {

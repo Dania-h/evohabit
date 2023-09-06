@@ -44,7 +44,7 @@ const Home = () => {
     <View style={styles.container}>
       <BackgroundGradient/>
       <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
-        <EvoPic height={height} width={width} />
+        <EvoPic />
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
         <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width}  />
@@ -61,11 +61,6 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     display: 'flex',
-  },
-  linearGradient: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
   },
 })
 
