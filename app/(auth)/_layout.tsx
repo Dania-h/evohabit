@@ -59,7 +59,7 @@ const TabsPage = () => {
                 name="AnalyticsScreen"
                 options={{
                     headerTitle: 'Analytics',
-                    tabBarIcon: ({ color, size }) => <Ionicons name="stats-chart" size={24} color="gray" />,
+                    tabBarIcon: ({ color, size }) => <Ionicons name="stats-chart" size={24} color="#081C154D" />,
                     tabBarLabel: 'Analytics',
                 }}
                 redirect={!isSignedIn}
@@ -68,7 +68,7 @@ const TabsPage = () => {
                 name="ProfileScreen"
                 options={{
                     headerTitle: 'My Profile',
-                    tabBarIcon: ({ color, size }) => <Feather name="user" size={24} color="gray" />,
+                    tabBarIcon: ({ color, size }) => <Feather name="user" size={24} color="#081C154D" />,
                     tabBarLabel: 'My Profile',
                     headerRight: () => <LogoutButton />,
                 }}
