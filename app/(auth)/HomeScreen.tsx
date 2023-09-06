@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useUser } from '@clerk/clerk-expo';
-import { RadialGradient } from 'react-native-gradients';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
 import HabitList from '../../components/HabitList'
@@ -43,7 +42,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <BackgroundGradient width={width} height={height} colorList={colorList}/>
+      <BackgroundGradient/>
       <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
         <EvoPic height={height} width={width} />
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
@@ -53,12 +52,6 @@ const Home = () => {
     </View>
   );
 };
-
-const colorList = [
-  { offset: '0%', color: '#FFF', opacity: '1' },
-  { offset: '27.49%', color: '#BCFFDB', opacity: '1' },
-  { offset: '85.21%', color: '#43BCCD', opacity: '1' }
-]
 
 const styles = StyleSheet.create({
   container: {
