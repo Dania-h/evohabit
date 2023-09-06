@@ -133,9 +133,6 @@ const styles = StyleSheet.create({
     indHabitContainer: {
         width: '100%',
         borderRadius: 30,
-        // borderWidth: 1,
-        // borderStyle: 'solid',
-        // borderColor: '#000',
         alignItems: 'center',
         flexDirection: 'row',
         padding: 16,
