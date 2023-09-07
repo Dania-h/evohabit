@@ -1,49 +1,68 @@
-import { View, Text, StyleSheet, Platform, Dimensions, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import EvoList from '../data/EvoList'
 import { FlatList } from 'react-native-gesture-handler'
 import { Image } from 'expo-image'
-import Evo1 from '../assets/images/evo-pic3.png'
 import { useEffect, useState } from 'react'
+import { useAssets } from 'expo-asset';
 
 interface EvokinListProps {
     width: number;
+    handleEvoSelect: (id : string | number[]) => void;
 }
 
 const EvokinList = (props: EvokinListProps) => {
 
-    const { width } = props;
+    const { width, handleEvoSelect } = props;
     const [selectedEvo, setSelectedEvo] = useState(0)
     const [evoUsed, setEvoUsed] = useState(0)
 
+    const [assets, error] = useAssets(
+        [require('../assets/images/evo-pic3.png'), require('../assets/images/evo-pic4.png'), require('../assets/images/evo-pic5.png'), require('../assets/images/evo-pic6.png'), require('../assets/images/evo-pic7.png'), require('../assets/images/evo-egg1.png'), require('../assets/images/evo-egg2.png')]
+    );
 
-    function handleEvoSelect(index: number) {
+
+    function handleEvoPress(index: number, id: string | number[]) {
         setSelectedEvo(prev => index)
+        handleEvoSelect(id)
     }
 
     const renderItem = ({ item, index }: { item: typeof EvoList[0], index: number }) => {
+        const asset = assets && assets[index]; // Get the corresponding asset
+        const imageSource = asset ? asset.uri : null; // Get the URI of the asset
+
         return (
             <TouchableOpacity
-                onPress={() => handleEvoSelect(index)}
-                style={[styles.indEvoContainer,
-                Platform.OS === 'android' && styles.androidShadow,
-                Platform.OS === 'ios' && styles.iosShadow,
-                { width: 110 * width / 390, height: 110 * width / 390, }, index + 1 % 3 === 0
-                    ? {
-                        marginRight: 8,
-                    } : {
-                        marginLeft: 8
+                onPress={() => handleEvoPress(index, item.id)}
+                style={[
+                    styles.indEvoContainer,
+                    Platform.OS === 'android' && styles.androidShadow,
+                    Platform.OS === 'ios' && styles.iosShadow,
+                    {
+                        width: 110 * width / 390,
+                        height: 110 * width / 390,
+                        padding: 8,
                     },
-                selectedEvo === index ? styles.selectedEvoStyling : false,
-                evoUsed === index ? styles.evoUsedStyling : false
-                ]}>
-                <Image
-                    style={[styles.image]}
-                    source={Evo1}
-                    contentFit="contain"
-                />
+                    index + 1 % 3 === 0
+                        ? {
+                            marginRight: 8,
+                        }
+                        : {
+                            marginLeft: 8,
+                        },
+                    selectedEvo === index ? styles.selectedEvoStyling : false,
+                    evoUsed === index ? styles.evoUsedStyling : false,
+                ]}
+            >
+                {imageSource ? (
+                    <Image
+                        style={styles.image}
+                        source={{ uri: imageSource }} // Provide a default value of an empty string if imageSource is null
+                        contentFit="scale-down"
+                    />
+                ) : null}
             </TouchableOpacity>
-        )
-    }
+        );
+    };
 
     return (
         <View style={styles.container}>

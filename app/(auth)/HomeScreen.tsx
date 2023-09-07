@@ -25,29 +25,23 @@ const Home = () => {
   });
 
   useEffect(() => {
-    //handler to get device Height
     setHeight(Dimensions.get('window').height);
-    //handler to get device Width
     setWidth(Dimensions.get('window').width);
-
-    // const expString = getExpWidth.toString() + '%';
-    // console.log(`${user?.firstName} line 34`)
-  }, [hasExp, user]);
+    setSafeAreaBottom(insets.bottom)
+  }, [insets]);
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
 
-  
-
   return (
     <View style={styles.container}>
-      <BackgroundGradient/>
+      <BackgroundGradient />
       <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
         <EvoPic />
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
-        <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width}  />
+        <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width} />
       </SafeAreaView>
     </View>
   );
