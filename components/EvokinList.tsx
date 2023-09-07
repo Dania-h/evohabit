@@ -17,7 +17,6 @@ const EvokinList = (props: EvokinListProps) => {
 
 
     function handleEvoSelect(index: number) {
-        console.log(index)
         setSelectedEvo(prev => index)
     }
 
