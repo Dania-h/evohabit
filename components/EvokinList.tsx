@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Platform, Dimensions, TouchableOpacity } from 'react-native'
 import EvoList from '../data/EvoList'
 import { FlatList } from 'react-native-gesture-handler'
 import { Image } from 'expo-image'
@@ -12,36 +12,37 @@ interface EvokinListProps {
 const EvokinList = (props: EvokinListProps) => {
 
     const { width } = props;
-    const [evoContainerSize, setEvoContainerSize] = useState(50);
-    const [evoContainerPadding, setEvoContainerPadding] = useState(8)
+    const [selectedEvo, setSelectedEvo] = useState(0)
+    const [evoUsed, setEvoUsed] = useState(0)
 
-    useEffect(() => {
-        setEvoContainerSize(prev => {
-            return (110 * width / 390)
-        })
-        setEvoContainerPadding(prev => {
-            return (16 * width / 390)
-        })
-    }, [])
+
+    function handleEvoSelect(index: number) {
+        console.log(index)
+        setSelectedEvo(prev => index)
+    }
 
     const renderItem = ({ item, index }: { item: typeof EvoList[0], index: number }) => {
         return (
-            <View style={[styles.indEvoContainer,
-            Platform.OS === 'android' && styles.androidShadow,
-            Platform.OS === 'ios' && styles.iosShadow,
-            { width: evoContainerSize, height: evoContainerSize, }, index+1 % 3 === 0
-                ? {
-                    marginRight: evoContainerPadding,
-                } : {
-                    marginLeft: evoContainerPadding
-                },
-            ]}>
+            <TouchableOpacity
+                onPress={() => handleEvoSelect(index)}
+                style={[styles.indEvoContainer,
+                Platform.OS === 'android' && styles.androidShadow,
+                Platform.OS === 'ios' && styles.iosShadow,
+                { width: 110 * width / 390, height: 110 * width / 390, }, index + 1 % 3 === 0
+                    ? {
+                        marginRight: 8,
+                    } : {
+                        marginLeft: 8
+                    },
+                selectedEvo === index ? styles.selectedEvoStyling : false,
+                evoUsed === index ? styles.evoUsedStyling : false
+                ]}>
                 <Image
                     style={[styles.image]}
                     source={Evo1}
                     contentFit="contain"
                 />
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -52,7 +53,7 @@ const EvokinList = (props: EvokinListProps) => {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.id.toString()}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={[styles.listContainer, { paddingBottom: 10 }]}
+                contentContainerStyle={[styles.listContainer]}
                 numColumns={3}
                 ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
             />
@@ -73,13 +74,22 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         width: '100%',
-        
+        paddingBottom: 10,
+        paddingHorizontal: 10,
+        alignItems: 'center'
     },
     indEvoContainer: {
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
+    },
+    selectedEvoStyling: {
+        backgroundColor: '#BCFFDB',
+    },
+    evoUsedStyling: {
+        borderColor: '#4F9D69',
+        borderWidth: 4,
     },
     iosShadow: {
         shadowColor: '#000000',

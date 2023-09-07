@@ -25,11 +25,12 @@ const evoScreen = () => {
     return (
         <View style={styles.container}>
             <BackgroundGradient />
-            <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]} />
-            <EvoPic />
-            <EvoInfo hasExp={0} needExp={50} screenWidth={width} />
-            <EvoPhases />
-            <EvokinList width={width} />
+            <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
+                <EvoPic />
+                <EvoInfo hasExp={0} needExp={50} screenWidth={width} />
+                <EvoPhases />
+                <EvokinList width={width} />
+            </SafeAreaView>
         </View>
     )
 }
