@@ -6,7 +6,7 @@ import { useAssets } from 'expo-asset';
 import EvoList from '../data/EvoList'
 
 interface EvoPicProps {
-    selectedEvoId: string | number[]
+    selectedEvoId: string | number[] | undefined
 }
 
 interface EvoType {
@@ -50,11 +50,13 @@ const EvoPic = (props: EvoPicProps) => {
     }, []);
 
     useEffect(() => {
+        console.log(selectedEvoId);
         const foundEvo = EvoList.find((evo) => {
-            return evo.id === selectedEvoId
-        })
-        setEvo(foundEvo)
-    }, [selectedEvoId])
+            return evo.id === selectedEvoId;
+        });
+        setEvo(foundEvo);
+        // console.log(foundEvo + " found evo variable");
+    }, [selectedEvoId]);
 
     return (
         <View style={styles.container}>

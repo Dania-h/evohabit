@@ -6,26 +6,32 @@ import EvoPic from '../../components/EvoPic'
 import EvoInfo from '../../components/EvoInfo'
 import EvoPhases from '../../components/EvoPhases'
 import EvokinList from '../../components/EvokinList'
+import { useEvoContext } from '../../context/EvoContext'
 
 
 const evoScreen = () => {
 
+    const evoInfo = useEvoContext()
     const insets = useSafeAreaInsets();
 
     const [safeAreaBottom, setSafeAreaBottom] = useState(insets.bottom);
     const [width, setWidth] = useState(0);
 
     const [usedEvo, setUsedEvo] = useState();
-    const [selectedEvoId, setSelectedEvoId] = useState("")
+    const [selectedEvoId, setSelectedEvoId] = useState(evoInfo.id)
+
 
     function handleEvoSelect(id: string | number[]) {
-        if (typeof id === "string"){
+        if (typeof id === "string") {
             setSelectedEvoId(id)
         }
     }
 
     function handleSetUsedEvo() {
-        console.log(selectedEvoId)
+        if(selectedEvoId === undefined) {
+            return;
+        }
+        evoInfo.changeEvo(selectedEvoId)
     }
 
     useEffect(() => {
@@ -36,10 +42,10 @@ const evoScreen = () => {
         <View style={styles.container}>
             <BackgroundGradient />
             <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
-                <EvoPic selectedEvoId={selectedEvoId}/>
+                <EvoPic selectedEvoId={selectedEvoId} />
                 <EvoInfo hasExp={0} needExp={50} screenWidth={width} />
-                <EvoPhases width={width} handleSetUsedEvo={handleSetUsedEvo}/>
-                <EvokinList width={width} handleEvoSelect={handleEvoSelect}/>
+                <EvoPhases width={width} handleSetUsedEvo={handleSetUsedEvo} />
+                <EvokinList width={width} handleEvoSelect={handleEvoSelect} />
             </SafeAreaView>
         </View>
     )

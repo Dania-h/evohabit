@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import React, { useEffect, useState, } from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import { useFonts } from 'expo-font';
 import DatesComponent from '../../components/DatesComponent';
@@ -8,6 +8,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import EvoInfo from '../../components/EvoInfo';
 import EvoPic from '../../components/EvoPic';
 import BackgroundGradient from '../../components/BackgroundGradient';
+import { useEvoContext } from '../../context/EvoContext';
 
 const Home = () => {
   const insets = useSafeAreaInsets();
@@ -19,6 +20,9 @@ const Home = () => {
   const [needExp, setNeedExp] = useState(50)
 
   const { user } = useUser();
+  const evoInfo = useEvoContext()
+
+  // const { counter, setCounter } = useContext(AppContext)
 
   const [fontsLoaded, fontError] = useFonts({
     'Quicksand': require('../../assets/fonts/Quicksand.ttf'),
@@ -28,17 +32,20 @@ const Home = () => {
     setHeight(Dimensions.get('window').height);
     setWidth(Dimensions.get('window').width);
     setSafeAreaBottom(insets.bottom)
+    // console.log(evoId)
   }, [insets]);
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
 
+
+
   return (
     <View style={styles.container}>
       <BackgroundGradient />
       <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
-        <EvoPic />
+        <EvoPic selectedEvoId={evoInfo.id} />
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
         <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width} />
