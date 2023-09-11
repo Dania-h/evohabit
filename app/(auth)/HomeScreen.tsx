@@ -32,14 +32,11 @@ const Home = () => {
     setHeight(Dimensions.get('window').height);
     setWidth(Dimensions.get('window').width);
     setSafeAreaBottom(insets.bottom)
-    // console.log(evoId)
   }, [insets]);
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
-
 
   return (
     <View style={styles.container}>

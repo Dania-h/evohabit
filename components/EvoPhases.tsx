@@ -1,14 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
+import { useEvoContext } from '../context/EvoContext';
+import { Checkmark } from './icons';
 
 interface EvoPhasesProps {
     width: number,
     handleSetUsedEvo: () => void;
+    selectedEvoId: string | number[] | undefined;
 }
 
 const EvoPhases = (props: EvoPhasesProps) => {
 
-    const { width, handleSetUsedEvo } = props;
+    const { width, handleSetUsedEvo, selectedEvoId } = props;
+    const evoInfo = useEvoContext();
 
     function getRatio(pixelWidth: number) {
         const figmaPixelWidth = 390;
@@ -35,8 +39,17 @@ const EvoPhases = (props: EvoPhasesProps) => {
                     <MaterialIcons name="lock-outline" size={24} color="#00000026" />
                 </View>
             </View>
-            <TouchableOpacity style={[styles.button, { width: getRatio(100) }]} onPress={() => handleSetUsedEvo()}>
-                <Text style={styles.buttonText}>Select</Text>
+            <TouchableOpacity
+                style={[
+                    { width: getRatio(100), flexDirection: 'row', maxWidth: getRatio(100) },
+                    evoInfo.id === selectedEvoId ? styles.selectButtonActive : styles.button
+                ]}
+                onPress={() => handleSetUsedEvo()}
+            >
+                {
+                    evoInfo.id === selectedEvoId ? <Checkmark width={`${getRatio(16)}`} height={`${getRatio(14)}`} /> : null
+                }
+                <Text style={evoInfo.id === selectedEvoId ? styles.selectButtonText : styles.buttonText}>Select</Text>
             </TouchableOpacity>
         </View>
     )
@@ -90,5 +103,19 @@ const styles = StyleSheet.create({
         fontFamily: 'Quicksand',
         fontWeight: "400",
         fontSize: 14,
+    },
+    selectButtonActive: {
+        backgroundColor: "#4F9D69",
+        borderRadius: 30,
+        columnGap: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    selectButtonText: {
+        fontFamily: 'Quicksand',
+        fontWeight: "400",
+        fontSize: 14,
+        color: "#fff",
     }
 })

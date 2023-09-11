@@ -11,7 +11,7 @@ import { useEvoContext } from '../../context/EvoContext'
 
 const evoScreen = () => {
 
-    const evoInfo = useEvoContext()
+    const evoInfo = useEvoContext();
     const insets = useSafeAreaInsets();
 
     const [safeAreaBottom, setSafeAreaBottom] = useState(insets.bottom);
@@ -21,14 +21,14 @@ const evoScreen = () => {
     const [selectedEvoId, setSelectedEvoId] = useState(evoInfo.id)
 
 
-    function handleEvoSelect(id: string | number[]) {
+    function handleEvoClick(id: string | number[]) {
         if (typeof id === "string") {
             setSelectedEvoId(id)
         }
     }
 
     function handleSetUsedEvo() {
-        if(selectedEvoId === undefined) {
+        if (selectedEvoId === undefined) {
             return;
         }
         evoInfo.changeEvo(selectedEvoId)
@@ -41,11 +41,24 @@ const evoScreen = () => {
     return (
         <View style={styles.container}>
             <BackgroundGradient />
-            <SafeAreaView style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}>
-                <EvoPic selectedEvoId={selectedEvoId} />
-                <EvoInfo hasExp={0} needExp={50} screenWidth={width} />
-                <EvoPhases width={width} handleSetUsedEvo={handleSetUsedEvo} />
-                <EvokinList width={width} handleEvoSelect={handleEvoSelect} />
+            <SafeAreaView
+                style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}
+            >
+                <EvoPic
+                    selectedEvoId={selectedEvoId} />
+                <EvoInfo
+                    hasExp={0}
+                    needExp={50}
+                    screenWidth={width} />
+                <EvoPhases
+                    width={width} handleSetUsedEvo={handleSetUsedEvo}
+                    selectedEvoId={selectedEvoId}
+                />
+                <EvokinList
+                    width={width} 
+                    handleEvoClick={handleEvoClick}
+                    selectedEvoId={selectedEvoId}
+                />
             </SafeAreaView>
         </View>
     )

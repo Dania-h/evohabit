@@ -63,10 +63,8 @@ const TabsPage = () => {
                                 {focused && <View style={{ width: 60, height: 5, backgroundColor: "#000", borderTopLeftRadius: 40, borderTopRightRadius: 40, position: 'absolute', bottom: 0 }} />}
                             </View>,
                         tabBarLabel: 'Home',
-
                     }}
                     redirect={!isSignedIn}
-
                 />
                 <Tabs.Screen
                     name="EvoScreen"

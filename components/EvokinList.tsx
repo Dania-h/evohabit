@@ -4,17 +4,20 @@ import { FlatList } from 'react-native-gesture-handler'
 import { Image } from 'expo-image'
 import { useEffect, useState } from 'react'
 import { useAssets } from 'expo-asset';
+import { useEvoContext } from '../context/EvoContext'
 
 interface EvokinListProps {
     width: number;
-    handleEvoSelect: (id : string | number[]) => void;
+    handleEvoClick: (id: string | number[]) => void;
+    selectedEvoId: string | number[] | undefined;
 }
 
 const EvokinList = (props: EvokinListProps) => {
 
-    const { width, handleEvoSelect } = props;
-    const [selectedEvo, setSelectedEvo] = useState(0)
-    const [evoUsed, setEvoUsed] = useState(0)
+    const evoInfo = useEvoContext();
+    const { width, handleEvoClick } = props;
+    const [clickedEvo, setClickedEvo] = useState<string | number[] | undefined>(undefined)
+    const [activeEvo, setActiveEvo] = useState(evoInfo.id);
 
     const [assets, error] = useAssets(
         [require('../assets/images/evo-pic3.png'), require('../assets/images/evo-pic4.png'), require('../assets/images/evo-pic5.png'), require('../assets/images/evo-pic6.png'), require('../assets/images/evo-pic7.png'), require('../assets/images/evo-egg1.png'), require('../assets/images/evo-egg2.png')]
@@ -22,9 +25,13 @@ const EvokinList = (props: EvokinListProps) => {
 
 
     function handleEvoPress(index: number, id: string | number[]) {
-        setSelectedEvo(prev => index)
-        handleEvoSelect(id)
+        setClickedEvo(id);
+        handleEvoClick(id);
     }
+
+    useEffect(() => {
+        console.log(activeEvo)
+    }, [])
 
     const renderItem = ({ item, index }: { item: typeof EvoList[0], index: number }) => {
         const asset = assets && assets[index]; // Get the corresponding asset
@@ -49,8 +56,8 @@ const EvokinList = (props: EvokinListProps) => {
                         : {
                             marginLeft: 8,
                         },
-                    selectedEvo === index ? styles.selectedEvoStyling : false,
-                    evoUsed === index ? styles.evoUsedStyling : false,
+                    clickedEvo === item.id ? styles.selectedEvoStyling : false,
+                    item.id === evoInfo.id ? styles.evoUsedStyling : false,
                 ]}
             >
                 {imageSource ? (
