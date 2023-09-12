@@ -64,7 +64,7 @@ const EvoPic = (props: EvoPicProps) => {
                 <Image
                     style={styles.image}
                     source={evo ? findAssetByURL(evo.url) : null}
-                    contentFit="fill"
+                    contentFit="contain"
                 />
             </View>
         </View>

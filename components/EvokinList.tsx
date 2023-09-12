@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingBottom: 10,
         paddingHorizontal: 10,
-        alignItems: 'center'
+        alignItems: 'flex-start'
     },
     indEvoContainer: {
         borderRadius: 30,
