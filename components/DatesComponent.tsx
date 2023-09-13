@@ -1,96 +1,85 @@
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-
+import CalendarStrip from 'react-native-calendar-strip';
+import moment from 'moment';
 
 export default function DatesComponent() {
 
-    const calendar = [
+    let thisMoment = moment();
+
+    const markedDatesArray = [
         {
-            day: 'Mon',
-            date: 14
-        },
-        {
-            day: 'Tues',
-            date: 15
-        },
-        {
-            day: 'Wed',
-            date: 16
-        },
-        {
-            day: 'Thurs',
-            date: 17
-        },
-        {
-            day: 'Fri',
-            date: 18
-        },
-        {
-            day: 'Sat',
-            date: 19
-        },
+            date: thisMoment,
+            dots: [
+                {
+                    color: '#000000'
+                }
+            ]
+        }
     ]
 
     return (
         <View style={styles.container}>
-            {calendar.map((day, index) => {
-                return (
-                    <View key={index} style={styles.bubbleContainer}>
-                        <Text style={styles.bubbleDay}>
-                            {day.day}
-                        </Text>
-                        <View style={[day.day === "Mon" ? { backgroundColor: '#4F9D69' } : { backgroundColor: '#fff' }, styles.bubble]}>
-                            <Text style={styles.bubbleDate}>
-                                {day.date}
-                            </Text>
-                            {day.date === 14 ? <View style={styles.todaysDate}></View> : false}
-                        </View>
-                    </View>
-                )
-            })}
+            <CalendarStrip
+                scrollable={true}
+                style={styles.calendar}
+                showMonth={false}
+                selectedDate={thisMoment}
+                calendarHeaderStyle={{ display: 'none' }}
+                iconStyle={{ display: 'none' }}
+                innerStyle={styles.innerStyle}
+                dayComponentHeight={80}
+                minDayComponentSize={80}
+                dayContainerStyle={styles.dayContainerStyle}
+                dateNameStyle={{ fontSize: 11 }}
+                dateNumberStyle={styles.dateNumberStyle}
+                highlightDateContainerStyle={styles.dayContainerStyle}
+                highlightDateNameStyle={[{ fontSize: 11 }]}
+                highlightDateNumberStyle={[styles.dateNumberStyle, {backgroundColor: '#4F9D69', color: 'white'}]}
+                markedDates={markedDatesArray}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        columnGap: 10,
         width: '100%',
-        justifyContent: 'space-around',
-        marginVertical: 16,
+        // backgroundColor: 'red',
+        height: 80,
     },
-    bubble: {
-        borderRadius: 999,
+    calendar: {
+        // backgroundColor: 'green',
+        height: '100%',
+        padding: 0,
+        margin: 0,
+    },
+    innerStyle: {
+        // backgroundColor: 'yellow',
+        gap: 0,
+        padding: 0,
+        margin: 0,
+        // flex: 1
+    },
+    dayContainerStyle: {
+        borderRadius: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 4,
+        // backgroundColor: 'red',
+        width: 40,
+    },
+    dateNumberStyle: {
         height: 40,
         width: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-    },
-    bubbleContainer: {
-        alignItems: 'center',
-        flex: 0,
-
-    },
-    bubbleDay: {
-        fontSize: 11,
-        fontWeight: '300',
-        fontFamily: 'Quicksand'
-    },
-    bubbleDate: {
+        backgroundColor: 'white',
+        borderRadius: 999,
         fontSize: 14,
-        fontWeight: '300',
-        fontFamily: 'Quicksand'
+        textAlign: 'center',
+        textAlignVertical: 'center'
     },
-    todaysDate: {
+    todayDot: {
         height: 4,
         width: 4,
-        backgroundColor: '#000',
         borderRadius: 999,
-        position: 'absolute',
-        bottom: 7
     },
-    selectedDate: {
-        backgroundColor: '#4F9D69'
-    }
 })
