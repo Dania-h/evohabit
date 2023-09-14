@@ -121,6 +121,7 @@ const TabsPage = () => {
                         headerTitle: 'Add A Habit',
                         tabBarLabel: 'Add',
                         href: null,
+                        headerShown: false,
                     }}
                     redirect={!isSignedIn}
                 />
