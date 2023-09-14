@@ -1,6 +1,5 @@
 import Svg, { Path } from "react-native-svg"
 
-
 export function HeartSvg() {
     return (
         <Svg width="30" height="30" viewBox="0 0 30 30" fill="none">
