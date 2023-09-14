@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
-import { useAuth } from '@clerk/clerk-expo';
+import { useAuth, useUser, } from '@clerk/clerk-expo';
 import HabitTab from '../../components/HabitTabPic'
 import EvoTabPic from '../../components/EvoTabPic'
 import { Feather } from '@expo/vector-icons';
@@ -9,9 +9,14 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { EvoContext } from '../../context/EvoContext';
 import { useState } from 'react';
 import EvoList from '../../data/EvoList';
+import { useOpenDatabase } from '../../hooks/useOpenDatabase';
+
 
 export const LogoutButton = () => {
     const { signOut } = useAuth();
+    const { user } = useUser();
+    console.log(user?.emailAddresses)
+    const db = useOpenDatabase(`${user?.emailAddresses}`)
 
     const doLogout = () => {
         signOut();
