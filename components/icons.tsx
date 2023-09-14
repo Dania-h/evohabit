@@ -1,4 +1,4 @@
-import Svg, { Path } from "react-native-svg"
+import Svg, { Path, Circle } from "react-native-svg"
 
 export function BackArrow() {
     return (
@@ -74,4 +74,12 @@ export function Checkmark({ width, height }: CheckmarkProps) {
             />
         </Svg>
     );
+}
+
+export function ToggleCircle() {
+    return (
+        <Svg width="20" height="20">
+            <Circle cx="10" cy="10" r="10" fill="white" />
+        </Svg>
+    )
 }
