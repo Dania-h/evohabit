@@ -9,6 +9,7 @@ import EvoInfo from '../../components/EvoInfo';
 import EvoPic from '../../components/EvoPic';
 import BackgroundGradient from '../../components/BackgroundGradient';
 import { useEvoContext } from '../../context/EvoContext';
+import AddButton from '../../components/AddButton';
 
 const Home = () => {
   const insets = useSafeAreaInsets();
@@ -36,7 +37,7 @@ const Home = () => {
 
   if (!fontsLoaded && !fontError) {
     return null;
-  }
+  } 
 
   return (
     <View style={styles.container}>
@@ -46,6 +47,7 @@ const Home = () => {
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
         <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width} />
+        <AddButton />
       </SafeAreaView>
     </View>
   );
