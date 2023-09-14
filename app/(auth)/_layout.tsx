@@ -121,6 +121,7 @@ const TabsPage = () => {
                         tabBarLabel: 'Add',
                         href: null,
                         headerShown: false,
+                        tabBarStyle: {display: 'none'}
                     }}
                     redirect={!isSignedIn}
                 />

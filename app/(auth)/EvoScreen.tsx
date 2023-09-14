@@ -8,8 +8,8 @@ import EvoPhases from '../../components/EvoPhases'
 import EvokinList from '../../components/EvokinList'
 import { useEvoContext } from '../../context/EvoContext'
 
-
 const evoScreen = () => {
+    
 
     const evoInfo = useEvoContext();
     const insets = useSafeAreaInsets();
@@ -39,7 +39,7 @@ const evoScreen = () => {
     }, []);
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container]}>
             <BackgroundGradient />
             <SafeAreaView
                 style={[styles.safeArea, { paddingBottom: -safeAreaBottom }]}

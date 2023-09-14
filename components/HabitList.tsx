@@ -66,28 +66,28 @@ const HabitList: React.FC<HabitListProps> = (props) => {
     }
 
     const renderItem = ({ item }: { item: typeof Habits[0] }) => (
-        <View>
-            <View style={[styles.indHabitContainer,
-            Platform.OS === 'android' && styles.androidShadow,
-            Platform.OS === 'ios' && styles.iosShadow,
-            item.progress === 100 ? { opacity: .40 } : {}
-            ]}>
-                {getIcon(item.category)}
-                <View>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.subtitle}>{item.subtitle}</Text>
-                </View>
-                <ProgressCircle
-                    habitId={item.id}
-                    strokeWidth={strokeWidth}
-                    circleSize={circleSize}
-                    radius={radius}
-                    circumference={circumference}
-                    duration={duration}
-                    habit={item}
-                />
+
+        <View style={[styles.indHabitContainer,
+        Platform.OS === 'android' && styles.androidShadow,
+        Platform.OS === 'ios' && styles.iosShadow,
+        item.progress === 100 ? { opacity: .40 } : {}
+        ]}>
+            {getIcon(item.category)}
+            <View>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.subtitle}>{item.subtitle}</Text>
             </View>
+            <ProgressCircle
+                habitId={item.id}
+                strokeWidth={strokeWidth}
+                circleSize={circleSize}
+                radius={radius}
+                circumference={circumference}
+                duration={duration}
+                habit={item}
+            />
         </View>
+
     );
 
     return (
