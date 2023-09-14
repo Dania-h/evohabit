@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BackArrow } from "../../components/icons";
 import { useRouter } from "expo-router";
+import HabitForm from "../../components/HabitForm";
 
 const AddHabit = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const AddHabit = () => {
           </TouchableOpacity>
           <Text style={styles.header}>Add Habit</Text>
         </View>
+        <HabitForm />
       </SafeAreaView>
     </View>
   );
