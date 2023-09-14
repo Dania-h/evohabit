@@ -61,13 +61,14 @@ const HabitForm = () => {
           <View style={{ width: 40, height: 40, backgroundColor: '#BCFFDB', borderRadius: 999, justifyContent: 'center', alignItems: 'center' }}>
             <SolarNotebook />
           </View>
-          <TextInput placeholder="Enter a habit name" style={[styles.input, { marginLeft: 16, paddingLeft: 8 }]} value={name} onChangeText={setName} />
+          <TextInput placeholder="Enter a habit name" placeholderTextColor={'#00000080'} style={[styles.input, { marginLeft: 16, paddingLeft: 8 }]} value={name} onChangeText={setName} />
         </View>
         <TextInput
           style={[styles.input, { paddingLeft: 8 }]}
           value={description}
           onChangeText={setDescription}
           placeholder="Enter additional details (optional)"
+          placeholderTextColor={'#00000080'}
         />
         <Text style={{ fontSize: 20, fontWeight: "600" }}>Frequency</Text>
         <View style={[styles.frequencyWrapper]}>
@@ -230,8 +231,8 @@ const HabitForm = () => {
             }}
             renderDropdownIcon={() => <AntDesign name="caretdown" size={16} color="black" />}
           />
-          <TextInput placeholder="Count..." style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
-          <TextInput placeholder="Unit..." style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
+          <TextInput placeholder="Count..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
+          <TextInput placeholder="Unit..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
         </View>
         <Text style={{ fontSize: 20, fontWeight: "600", marginVertical: 16 }}>Duration</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
