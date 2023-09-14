@@ -10,12 +10,11 @@ import { EvoContext } from '../../context/EvoContext';
 import { useState } from 'react';
 import EvoList from '../../data/EvoList';
 import { useOpenDatabase } from '../../hooks/useOpenDatabase';
-
+import AddHabitScreen from './AddHabitScreen'
 
 export const LogoutButton = () => {
     const { signOut } = useAuth();
     const { user } = useUser();
-    console.log(user?.emailAddresses)
     const db = useOpenDatabase(`${user?.emailAddresses}`)
 
     const doLogout = () => {
@@ -48,7 +47,7 @@ const TabsPage = () => {
                         backgroundColor: '#6c47ff',
                     },
                     headerTintColor: '#fff',
-                    headerShown: false,
+
                     tabBarStyle: [{ borderTopLeftRadius: 20, borderTopRightRadius: 20 },
                     Platform.OS === 'android' && styles.androidShadow,
                     Platform.OS === 'ios' && styles.iosShadow
@@ -62,6 +61,7 @@ const TabsPage = () => {
                     name="HomeScreen"
                     options={{
                         headerTitle: 'Home',
+                        headerShown: false,
                         tabBarIcon: ({ color, size, focused }) =>
                             <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, position: 'relative' }}>
                                 <HabitTab color={color} />
@@ -81,6 +81,7 @@ const TabsPage = () => {
                                 {focused && <View style={{ width: 60, height: 5, backgroundColor: "#000", borderTopLeftRadius: 40, borderTopRightRadius: 40, position: 'absolute', bottom: 0 }} />}
                             </View>,
                         tabBarLabel: 'Evo',
+                        headerShown: false,
                     }}
                     redirect={!isSignedIn}
                 />
@@ -95,6 +96,7 @@ const TabsPage = () => {
                             </View>,
 
                         tabBarLabel: 'Analytics',
+                        headerShown: false,
                     }}
                     redirect={!isSignedIn}
                 />
@@ -110,6 +112,15 @@ const TabsPage = () => {
 
                         tabBarLabel: 'My Profile',
                         headerRight: () => <LogoutButton />,
+                    }}
+                    redirect={!isSignedIn}
+                />
+                <Tabs.Screen
+                    name="AddHabitScreen"
+                    options={{
+                        headerTitle: 'Add A Habit',
+                        tabBarLabel: 'Add',
+                        href: null,
                     }}
                     redirect={!isSignedIn}
                 />
