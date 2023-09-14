@@ -47,7 +47,7 @@ const Home = () => {
         <EvoInfo hasExp={hasExp} needExp={needExp} screenWidth={width} />
         <DatesComponent />
         <HabitList username={user?.firstName ? user.firstName : ""} screenWidth={width} />
-        <AddButton/>
+        <AddButton />
       </SafeAreaView>
     </View>
   );
