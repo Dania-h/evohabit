@@ -10,7 +10,6 @@ import { EvoContext } from '../../context/EvoContext';
 import { useState } from 'react';
 import EvoList from '../../data/EvoList';
 import { useOpenDatabase } from '../../hooks/useOpenDatabase';
-import AddHabitScreen from './AddHabitScreen'
 
 export const LogoutButton = () => {
     const { signOut } = useAuth();
@@ -121,6 +120,7 @@ const TabsPage = () => {
                         headerTitle: 'Add A Habit',
                         tabBarLabel: 'Add',
                         href: null,
+                        headerShown: false,
                     }}
                     redirect={!isSignedIn}
                 />
