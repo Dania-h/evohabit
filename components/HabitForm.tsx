@@ -6,13 +6,15 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Platform
+  Platform,
+  Keyboard
 } from "react-native";
 import useGetRatio from "../hooks/useGetRatio";
 import SelectDropdown from 'react-native-select-dropdown'
 import { AntDesign } from '@expo/vector-icons';
 import { SolarNotebook, ToggleCircle } from "./icons";
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const HabitForm = () => {
   const [name, setName] = useState("");
@@ -20,9 +22,14 @@ const HabitForm = () => {
   const [frequency, setFrequency] = useState("")
   const [days, setDays] = useState<string[]>([]);
   const [targetGoal, setTargetGoal] = useState("")
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
   const [reminders, setReminders] = useState([])
+  const [showStartDate, setShowStartDate] = useState(false);
+  const [showEndDate, setShowEndDate] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [habitStartTime, setHabitStartTime] = useState('');
+  const [habitEndTime, setHabitEndTime] = useState('');
+
   const targetGoalOptions = ["At least", "Less than", "Exactly"]
 
   function handleFrequencyClick(frequencyValue: string) {
@@ -51,6 +58,22 @@ const HabitForm = () => {
 
   function handleTargetGoalClick(targetType: string) {
     setTargetGoal(prev => targetType)
+  }
+
+  const handleShowStartDate = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate;
+    setShowStartDate(false);
+    setStartDate(currentDate);
+  };
+
+  const handleShowEndDate = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate;
+    setShowEndDate(false);
+    setEndDate(currentDate);
+  };
+
+  const handlePressStartDate = (event: any) => {
+
   }
 
   return (
@@ -235,9 +258,26 @@ const HabitForm = () => {
           <TextInput placeholder="Unit..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
         </View>
         <Text style={{ fontSize: 20, fontWeight: "600", marginVertical: 16 }}>Duration</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16, alignItems: 'center' }}>
           <Text>Start date:</Text>
-          <Text>Today, August 14, 2023</Text>
+          <TextInput
+            value={
+              startDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: '2-digit',
+                year: 'numeric',
+              })
+            } placeholder='time' onChangeText={setHabitStartTime} onPressIn={(e) => { setShowStartDate(prev => !prev) }}
+            onPressOut={(e) => Keyboard.dismiss()}
+            style={{}} />
+          {showStartDate &&
+            <DateTimePicker
+              value={startDate}
+              mode={'date'}
+              onChange={handleShowStartDate}
+            />
+          }
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
           <Text>End date:</Text>
@@ -252,7 +292,21 @@ const HabitForm = () => {
             <TextInput style={{ borderBottomColor: '#000', borderBottomWidth: 1, padding: 0 }}>90</TextInput>
             <Text>days</Text>
           </View>
-          <Text>Sunday, November 12, 2023</Text>
+          <TextInput value={
+            endDate.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long',
+              day: '2-digit',
+              year: 'numeric',
+            })
+          } placeholder='time' onChangeText={setHabitEndTime} inputMode='numeric' onPressIn={(e) => setShowEndDate(prev => !prev)} onPressOut={(e) => Keyboard.dismiss()} style={{}} />
+          {showEndDate &&
+            <DateTimePicker
+              value={endDate}
+              mode={'date'}
+              onChange={handleShowEndDate}
+            />
+          }
         </View>
         <Text style={{ fontSize: 20, fontWeight: "600", marginVertical: 16 }}>
           Reminder
