@@ -17,18 +17,25 @@ import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const HabitForm = () => {
+
+  const currentDate = new Date();
+  const futureDate = new Date(currentDate);
+  futureDate.setDate(currentDate.getDate() + 30);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [frequency, setFrequency] = useState("")
   const [days, setDays] = useState<string[]>([]);
   const [targetGoal, setTargetGoal] = useState("")
+  const [targetGoalType, setTargetGoalType] = useState("Less than")
   const [reminders, setReminders] = useState([])
   const [showStartDate, setShowStartDate] = useState(false);
   const [showEndDate, setShowEndDate] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(futureDate);
   const [habitStartTime, setHabitStartTime] = useState('');
   const [habitEndTime, setHabitEndTime] = useState('');
+  const [endDaysApart, setEndDaysApart] = useState(30)
 
   const targetGoalOptions = ["At least", "Less than", "Exactly"]
 
@@ -42,9 +49,7 @@ const HabitForm = () => {
       let foundDay = prev.find(day => day === dayClicked);
       if (foundDay === undefined) {
         filteredDays.push(dayClicked);
-        console.log('day wasnt found')
       } else {
-        console.log('day was found!!!')
         filteredDays = prev.filter(day => day !== dayClicked);
       }
       return filteredDays;
@@ -72,8 +77,23 @@ const HabitForm = () => {
     setEndDate(currentDate);
   };
 
-  const handlePressStartDate = (event: any) => {
+  const handleEndDaysApart = (daysApart: number) => {
+    const currentDate = new Date();
+    setEndDate(
+      () => {
+        currentDate.setDate(currentDate.getDate() + daysApart);
+        return currentDate
+      })
+  }
 
+  function handleSubmitForm() {
+    console.log(name)
+    console.log(description)
+    console.log(frequency)
+    console.log(days)
+    console.log(targetGoal)
+    console.log(startDate)
+    console.log(endDate)
   }
 
   return (
@@ -243,8 +263,9 @@ const HabitForm = () => {
             selectedRowStyle={{ backgroundColor: '#4F9D69' }}
             data={targetGoalOptions}
             defaultButtonText="At least"
+            defaultValue={"At least"}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index)
+              setTargetGoalType(prev => selectedItem)
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem
@@ -289,7 +310,26 @@ const HabitForm = () => {
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TextInput style={{ borderBottomColor: '#000', borderBottomWidth: 1, padding: 0 }}>90</TextInput>
+            <View style={{ borderBottomColor: '#000', borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center', width: 40 }}>
+              <TextInput
+                onSubmitEditing={() => handleEndDaysApart(endDaysApart)}
+                inputMode={'numeric'}
+                style={{
+                  marginLeft: 'auto',
+                  marginRight: 'auto'
+                }}
+                value={`${endDaysApart}`}
+                onChangeText={(text) => {
+                  const numberValue = parseInt(text, 10); // Parse the input text as a number
+                  if (!isNaN(numberValue)) {
+                    // Check if the parsed value is a valid number
+                    setEndDaysApart(numberValue); // Update the state with the parsed number
+                  }
+                }}
+              >
+
+              </TextInput>
+            </View>
             <Text>days</Text>
           </View>
           <TextInput value={
