@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from "react-native";
 import useGetRatio from "../hooks/useGetRatio";
 import SelectDropdown from 'react-native-select-dropdown'
@@ -333,6 +334,7 @@ const HabitForm = () => {
                   marginRight: 'auto'
                 }}
                 onSubmitEditing={() => handleEndDaysApart(endDaysApart)}
+                onBlur={() => handleEndDaysApart(endDaysApart)}
                 value={`${endDaysApart}`}
                 onChangeText={(text) => {
                   const numberValue = parseInt(text, 10); // Parse the input text as a number
@@ -381,10 +383,10 @@ const HabitForm = () => {
             <Entypo name="plus" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity 
-        onPress={handleSubmitForm}
-        style={[{ width: '100%', backgroundColor: '#081C15', justifyContent: 'center', alignItems: 'center', borderRadius: 30, flex: 1, marginVertical: 16 },
-        ]}>
+        <TouchableOpacity
+          onPress={handleSubmitForm}
+          style={[{ width: '100%', backgroundColor: '#081C15', justifyContent: 'center', alignItems: 'center', borderRadius: 30, flex: 1, marginVertical: 16 },
+          ]}>
           <Text style={{ color: 'white', fontSize: 20, fontWeight: "600", height: 32 }}>
             Save
           </Text>
