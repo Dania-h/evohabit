@@ -31,14 +31,18 @@ const HabitForm = () => {
   const [targetGoalType, setTargetGoalType] = useState("Less than")
   const [targetCount, setTargetCount] = useState("")
   const [targetUnit, setTargetUnit] = useState("")
-  const [reminders, setReminders] = useState([])
+
   const [showStartDate, setShowStartDate] = useState(false);
   const [showEndDate, setShowEndDate] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(futureDate);
   const [habitStartTime, setHabitStartTime] = useState('');
   const [habitEndTime, setHabitEndTime] = useState('');
-  const [endDaysApart, setEndDaysApart] = useState(30)
+  const [endDaysApart, setEndDaysApart] = useState(30);
+
+  const [reminders, setReminders] = useState<Date[]>([])
+  const [newReminder, setNewReminder] = useState<Date>()
+  const [showNewRemionder, setShowNewReminder] = useState(false)
 
   const targetGoalOptions = ["At least", "Less than", "Exactly"]
 
