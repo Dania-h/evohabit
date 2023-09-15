@@ -28,6 +28,8 @@ const HabitForm = () => {
   const [days, setDays] = useState<string[]>([]);
   const [targetGoal, setTargetGoal] = useState("")
   const [targetGoalType, setTargetGoalType] = useState("Less than")
+  const [targetCount, setTargetCount] = useState("")
+  const [targetUnit, setTargetUnit] = useState("")
   const [reminders, setReminders] = useState([])
   const [showStartDate, setShowStartDate] = useState(false);
   const [showEndDate, setShowEndDate] = useState(false);
@@ -92,6 +94,8 @@ const HabitForm = () => {
     console.log(frequency)
     console.log(days)
     console.log(targetGoal)
+    console.log(targetCount)
+    console.log(targetUnit)
     console.log(startDate)
     console.log(endDate)
   }
@@ -275,8 +279,19 @@ const HabitForm = () => {
             }}
             renderDropdownIcon={() => <AntDesign name="caretdown" size={16} color="black" />}
           />
-          <TextInput placeholder="Count..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
-          <TextInput placeholder="Unit..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]} />
+          <TextInput placeholder="Count..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },
+          !targetCount && { color: '#00000080' }
+          ]}
+            inputMode="numeric"
+            value={targetCount}
+            onChangeText={(text) => {
+              setTargetCount(text);
+            }}
+          />
+          <TextInput placeholder="Unit..." placeholderTextColor={'#00000080'} style={[{ width: useGetRatio(110), paddingLeft: 8, borderBottomWidth: 1, borderBottomColor: '#000' },]}
+            value={`${targetUnit}`}
+            onChangeText={(text) => setTargetUnit(prev => text)}
+          />
         </View>
         <Text style={{ fontSize: 20, fontWeight: "600", marginVertical: 16 }}>Duration</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16, alignItems: 'center' }}>
@@ -312,12 +327,12 @@ const HabitForm = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ borderBottomColor: '#000', borderBottomWidth: 1, alignItems: 'center', justifyContent: 'center', width: 40 }}>
               <TextInput
-                onSubmitEditing={() => handleEndDaysApart(endDaysApart)}
                 inputMode={'numeric'}
                 style={{
                   marginLeft: 'auto',
                   marginRight: 'auto'
                 }}
+                onSubmitEditing={() => handleEndDaysApart(endDaysApart)}
                 value={`${endDaysApart}`}
                 onChangeText={(text) => {
                   const numberValue = parseInt(text, 10); // Parse the input text as a number
@@ -366,7 +381,9 @@ const HabitForm = () => {
             <Entypo name="plus" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={[{ width: '100%', backgroundColor: '#081C15', justifyContent: 'center', alignItems: 'center', borderRadius: 30, flex: 1, marginVertical: 16 },
+        <TouchableOpacity 
+        onPress={handleSubmitForm}
+        style={[{ width: '100%', backgroundColor: '#081C15', justifyContent: 'center', alignItems: 'center', borderRadius: 30, flex: 1, marginVertical: 16 },
         ]}>
           <Text style={{ color: 'white', fontSize: 20, fontWeight: "600", height: 32 }}>
             Save
